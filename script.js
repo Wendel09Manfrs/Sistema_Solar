@@ -8,7 +8,7 @@ const camera = new THREE.PerspectiveCamera(
     1000);
 
 // Reposicionamento da câmera em Z
-camera.position.set(0, 0, 6)
+camera.position.set(0, 0, 4)
 
 // Inicializa o renderer
 const renderer = new THREE.WebGLRenderer({
