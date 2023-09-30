@@ -111,7 +111,7 @@ function createPlanete(size, texture, position, ring) {
 
 
 const terra = createPlanete(1*3, terraTextura, 184.29);
-const lua = createPlanete(0.273*3, luaTextura, 184.29);
+const lua = createPlanete(3.273*3, luaTextura, 184.29);
 const nuvens = createPlanete(1.01*3, nuvensTextura, 184.29);
 const mercurio = createPlanete(0.383*3,mercurioTextura, 138.29);
 const venus = createPlanete(0.95*3, venusTextura, 163.29);
@@ -160,7 +160,7 @@ function animate() {
   mercurio.obj.rotateY(0.04);
   venus.obj.rotateY(0.016);
   terra.obj.rotateY(0.01);
-  lua.obj.rotateY(0.02);
+  lua.obj.rotateY(0.01);
   //nuvens.position.set(Math.sin(tempo * 0.12) * 62, 0, Math.cos(tempo * 0.12) * 62);
   marte.obj.rotateY(0.00532);
   nuvens.obj.rotateY(0.01);
