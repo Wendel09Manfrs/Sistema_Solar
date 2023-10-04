@@ -1,2 +1,19 @@
 body{
-    background: radial-gradient(circle at center, white, rgba(83,89,221,0.5) 50%);}
+    background-color: black;}
+
+
+    #controles {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+
+    .vel {
+        margin-bottom: 10px; /* Espaçamento entre cada grupo de controle */
+    }
+
+    input[type="range"] {
+        width: 100%;
+    }
