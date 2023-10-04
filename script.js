@@ -41,6 +41,7 @@ const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerH
 const orbit = new OrbitControls(camera, renderer.domElement);
 orbit.enablePan = true;  
 orbit.enableRotate = true;
+orbit.maxZoom = 1000;
 
 const ambientLight = new THREE.AmbientLight(0x333333);
 scene.add(ambientLight);
@@ -67,78 +68,70 @@ const sol = new THREE.Mesh(geometriaSol, materialSol);
 sol.position.set(0, 0, 0);
 scene.add(sol);
 
-function createPlanete(size, texture, position, ring) {
+function createPlanet(size, texture, position, ring) {
+  const textureLoader = new THREE.TextureLoader();
   const geo = new THREE.SphereGeometry(size, 30, 30);
   const mat = new THREE.MeshBasicMaterial({
-      map: textureLoader.load(texture),
-      transparent: true
+    map:  textureLoader.load(texture), // Use TextureLoader here
+    transparent: true
   });
-  const mesh = new THREE.Mesh(geo, mat);
-  const obj = new THREE.Object3D();
-  obj.add(mesh);
-  if(ring) {
-      const ringGeo = new THREE.RingGeometry(
-          ring.innerRadius,
-          ring.outerRadius,
-          32);
-      const ringMat = new THREE.MeshBasicMaterial({
-          map: textureLoader.load(ring.texture),
-          side: THREE.DoubleSide
-      });
-      const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-      obj.add(ringMesh);
-      ringMesh.position.x = position;
-      ringMesh.rotation.x = -0.5 * Math.PI;
+  const planeta = new THREE.Mesh(geo, mat);
+
+  if (ring) {
+    const ringGeo = new THREE.RingGeometry(
+      ring.innerRadius,
+      ring.outerRadius,
+      32
+    );
+    const ringMat = new THREE.MeshBasicMaterial({
+      map: textureLoader.load(ring.texture),
+      side: THREE.DoubleSide
+    });
+    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+    planeta.add(ringMesh); 
+    ringMesh.rotation.x = -0.5 * Math.PI;
   }
-  scene.add(obj);
-  mesh.position.x = position;
-  return {mesh, obj}
+  scene.add(planeta);
+  planeta.position.x = position;
+  return planeta;
 }
 
 
-
-const terra = createPlanete(1*3, terraTextura, 184.29*2);
-const lua = createPlanete(0.273*3, luaTextura, 184.29*2);
-const nuvens = createPlanete(1.01*3, nuvensTextura, 184.29*2);
-const mercurio = createPlanete(0.383*3,mercurioTextura, 138.29*2);
-const venus = createPlanete(0.95*3, venusTextura, 163.29*2);
-const netuno = createPlanete(3.85*3, netunoTextura, 2359.29*2);
-const pluto = createPlanete(0.19*3, plutoTextura, 3069.29*2);
-const marte = createPlanete(0.532*3, marteTextura, 224.29*2);
-
+const terra = createPlanet(1*3, terraTextura, 184.29*2);
+const lua = createPlanet(0.273*3, luaTextura, 184.29*2);
+const nuvens = createPlanet(1.01*3, nuvensTextura, 184.29*2);
+const mercurio = createPlanet(0.383*3,mercurioTextura, 138.29*2);
+const venus = createPlanet(0.95*3, venusTextura, 163.29*2);
+const netuno = createPlanet(3.85*3, netunoTextura, 2359.29*2);
+const pluto = createPlanet(0.19*3, plutoTextura, 3069.29*2);
+const marte = createPlanet(0.532*3, marteTextura, 224.29*2);
 
 
-const europa = createPlanete(0.245*3, europaTextura, 499.29*2);
-const calisto = createPlanete(0.378*3, calistoTextura , 499.29*2);
-const ganymede = createPlanete(0.413*3, ganymedeTextura, 499.29*2);
-const iO = createPlanete(0.286*3, iOTextura, 499.29*2);
+
+const europa = createPlanet(0.245*3, europaTextura, 499.29*2);
+const calisto = createPlanet(0.378*3, calistoTextura , 499.29*2);
+const ganymede = createPlanet(0.413*3, ganymedeTextura, 499.29*2);
+const iO = createPlanet(0.286*3, iOTextura, 499.29*2);
 
 
-const jupiter = createPlanete(10.97*3, jupiterTextura, 499.29*2);
-const saturno = createPlanete(10*3, saturnoTextura, 824.29*2, {
+const jupiter = createPlanet(10.97*3, jupiterTextura, 499.29*2);
+const saturno = createPlanet(10*3, saturnoTextura, 824.29*2, {
     innerRadius: 12.88*3,
     outerRadius: 21.92*3,
     texture: anelSaturnoTextura
 });
-const geometrialua2 = new THREE.SphereGeometry(50.29, 32, 32); // Raio maior para o Sol
-const materiallua2 = new THREE.MeshBasicMaterial({
-  map:  textureLoader.load(luaTextura)
-});
-const lua2 = new THREE.Mesh(geometrialua2, materiallua2);
-lua2.position.set(284.29*2, 0, 0);
-scene.add(lua2);
 
-camera.position.set(200,200,200);
-terra.obj.add(lua.obj);
-jupiter.obj.add(europa.obj);
-jupiter.obj.add(calisto.obj);
-jupiter.obj.add(ganymede.obj);
-jupiter.obj.add(iO.obj);
+camera.position.set(50,50,-200);
 
-//lua2.add(camera)////////////////
+terra.add(lua);
+
+jupiter.add(europa);
+jupiter.add(calisto);
+jupiter.add(ganymede);
+jupiter.add(iO);
 
 
-const uranus = createPlanete(3.98*3, uranoTextura, 1544.29*2, {
+const uranus = createPlanet(3.98*3, uranoTextura, 1544.29*2, {
   innerRadius: 5.96*3,
   outerRadius: 7.69*3,
   texture: anelUranoTextura
@@ -150,26 +143,25 @@ scene.add(pointLight);
 
 function animate() {
   
-    
+
   sol.rotateY(0.0003);
-  mercurio.mesh.rotateY(0.00017);
-  venus.mesh.rotateY(-0.000041);//unico planeta que rotaciona em sentido horario na perspectiva de cima do plano do sistema solar
-  terra.mesh.rotateY(0.01);
-  nuvens.mesh.rotateY(0.01);
-  lua.mesh.rotateY(0.01);
-  //nuvens.rotation.y += 0.01;
-  marte.mesh.rotateY(0.0103);
-  jupiter.mesh.rotateY(0.024);
-  saturno.mesh.rotateY(0.022);
-  uranus.mesh.rotateY(0.0138);
-  netuno.mesh.rotateY(0.0149);
-  pluto.mesh.rotateY(0.00156);
+  mercurio.rotateY(0.00017);
+  venus.rotateY(-0.000041);//unico planeta que rotaciona em sentido horario na perspectiva de cima do plano do sistema solar
+  terra.rotateY(0.01);
+  nuvens.rotateY(0.01);
+  lua.rotateY(0.01);
+  marte.rotateY(0.0103);
+  jupiter.rotateY(0.024);
+  saturno.rotateY(0.022);
+  uranus.rotateY(0.0138);
+  netuno.rotateY(0.0149);
+  pluto.rotateY(0.00156);
 
   //ao redor do sol
-  mercurio.obj.rotateY(0.04);
-  venus.obj.rotateY(0.016);
-  terra.obj.rotateY(0.01);
-
+  //mercurio.obj.rotateY(0.04);
+ // venus.obj.rotateY(0.016);
+  //terra.rotation.z+=0.1;
+/*
   marte.obj.rotateY(0.00532);
   nuvens.obj.rotateY(0.01);
   jupiter.obj.rotateY(0.00084);
@@ -180,29 +172,38 @@ function animate() {
   uranus.obj.rotateY(0.00012);
   netuno.obj.rotateY(0.00006);
   pluto.obj.rotateY(0.00004);
+*/
+
+  const tempoTerra = Date.now() * 0.0008;
+  const aoRedorJupiter = Date.now() * 0.001;
+  const tempo = Date.now() * 0.0001; //só para teste
+
+  lua.position.set(Math.cos(-tempoTerra) * 20, 0, Math.sin(-tempoTerra) * 20);//translada a terra no mesmo movimento da terra
 
 
-  const tempoTerra = Date.now() * 0.008;
-  const tempoJupiter = Date.now() * 0.001;
-  const tempo = Date.now() * 0.0003;
+  //translacao
+  mercurio.position.set(Math.cos(tempo*4) * 138.29*2, 0, Math.sin(tempo*4) * 138.29*2);
+  venus.position.set(Math.cos(tempo*1.6) * 163.29*2, 0, Math.sin(tempo*1.6) * 163.29*2);
+  terra.position.set(Math.cos(tempo) * 184.29*2, 0, Math.sin(tempo) * 184.29*2);
+  nuvens.position.set(Math.cos(tempo) * 184.29*2, 0, Math.sin(tempo) * 184.29*2);
+  marte.position.set(Math.cos(tempo/1.87) * 224.29*2, 0, Math.sin(tempo/1.87) * 224.29*2);
+  
+  saturno.position.set(Math.cos(tempo/29.41) * 824.29*2, 0, Math.sin(tempo/29.41) * 824.29*2);
+  uranus.position.set(Math.cos(tempo/83.3) * 1544.29*2, 0, Math.sin(tempo/83.3) *1544.29*2 );
+  netuno.position.set(Math.cos(tempo/166.6) * 2359.29*2, 0, Math.sin(tempo/166.6) *2359.29*2 );
+  pluto.position.set(Math.cos(tempo/250) * 3069.29*2, 0, Math.sin(tempo/250) *3069.29*2 );
 
-  lua.obj.position.set(Math.cos(-tempoTerra) * 20, 0, Math.sin(-tempoTerra) * 20);//translada a terra no mesmo movimento da terra
+  jupiter.position.set(Math.cos(tempo/11.9) * 499.29*2, 0, Math.sin(tempo/11.9) * 499.29*2);
 
+  europa.position.set(Math.cos(-aoRedorJupiter*1.76) * 107.84, 0, Math.sin(-aoRedorJupiter*1.76) *107.84 );
+  calisto.position.set(Math.cos(-aoRedorJupiter/4.7) * 243.22, 0, Math.sin(-aoRedorJupiter/4.7) * 243.22);
+  ganymede.position.set(Math.cos(-aoRedorJupiter/2) *152.42 , 0, Math.sin(-aoRedorJupiter/2) * 152.42);
+  iO.position.set(Math.cos(-aoRedorJupiter) * 80, 0, Math.sin(-aoRedorJupiter) * 80);
 
-  //transladam no sentido de translação de rotação de jupiter
-  europa.obj.position.set(Math.cos(-tempoJupiter*1.76) * 107.84, 0, Math.sin(-tempoJupiter*1.76) *107.84 );
-  calisto.obj.position.set(Math.cos(-tempoJupiter/4.7) * 243.22, 0, Math.sin(-tempoJupiter/4.7) * 243.22);
-  ganymede.obj.position.set(Math.cos(-tempoJupiter/2) *152.42 , 0, Math.sin(-tempoJupiter/2) * 152.42);
-  iO.obj.position.set(Math.cos(-tempoJupiter) * 80, 0, Math.sin(-tempoJupiter) * 80);
+//orbit.target = new THREE.Vector3(terra.position.x,terra.position.y, terra.position.z ); //////////
+ camera.lookAt(jupiter.position.x,jupiter.position.y, jupiter.position.z );//////////////
+jupiter.add(camera);
 
-
-
-  //teste com lua fictícia
- lua2.position.set(Math.cos(tempo) * 184.29, 0, Math.sin(tempo) * 184.29);//////////////
- lua2.rotation.y += 0.1; 
- orbit.target = new THREE.Vector3(Math.cos(tempo) * 184.29, 0, Math.sin(tempo) * 184.29); //////////
- camera.lookAt(Math.cos(tempo) * 184.29, 0, Math.sin(tempo) * 184.29);//////////////
- 
 
 renderer.render(scene, camera)
 }
@@ -214,7 +215,6 @@ renderer.setAnimationLoop(animate);
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-// Redimensiona o renderer
 renderer.setSize(window.innerWidth, window.innerHeight)
 
 })
