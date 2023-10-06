@@ -213,7 +213,7 @@ function animate() {
   switch (astro) {
     case "sol":
         camera.lookAt(sol.position);
-        sol.add(camera);
+       // sol.add(camera);
         break;
     case "mercurio":
         camera.lookAt(mercurio.position);
