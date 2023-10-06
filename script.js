@@ -67,6 +67,7 @@ orbit.enablePan = true;
 orbit.enableRotate = true;
 orbit.maxZoom = 1000;
 
+
 const ambientLight = new THREE.AmbientLight(0x333333);
 scene.add(ambientLight);
 
@@ -84,7 +85,8 @@ const textureLoader = new THREE.TextureLoader();
 
 const geometriaSol = new THREE.SphereGeometry(109.29, 32, 32); // Raio maior para o Sol
 const materialSol = new THREE.MeshBasicMaterial({
-    map:  textureLoader.load(solTextura)
+    map:  textureLoader.load(solTextura),
+    side: THREE.DoubleSide
 });
 const sol = new THREE.Mesh(geometriaSol, materialSol);
 sol.position.set(0, 0, 0);
@@ -95,7 +97,8 @@ function createPlanet(size, texture, position, ring) {
   const geo = new THREE.SphereGeometry(size, 30, 30);
   const mat = new THREE.MeshBasicMaterial({
     map:  textureLoader.load(texture), // Use TextureLoader here
-    transparent: true
+    transparent: true,
+    side: THREE.DoubleSide
   });
   const planeta = new THREE.Mesh(geo, mat);
   if (ring) {
@@ -208,16 +211,18 @@ function animate() {
   calisto.position.set(Math.cos(-tempo/4.7) * 243.22, 0, Math.sin(-tempo/4.7) * 243.22);
   ganymede.position.set(Math.cos(-tempo/2) *152.42 , 0, Math.sin(-tempo/2) * 152.42);
   iO.position.set(Math.cos(-tempo) * 80, 0, Math.sin(-tempo) * 80);
-
+  
 
   switch (astro) {
     case "sol":
-        camera.lookAt(sol.position);
-        sol.add(camera);
+      if (camera.parent) {
+          camera.parent.remove(camera);
+      }
         break;
     case "mercurio":
         camera.lookAt(mercurio.position);
         mercurio.add(camera);
+        
         break;
     case "venus":
         camera.lookAt(venus.position);
@@ -252,7 +257,7 @@ function animate() {
         pluto.add(camera);
           break;
 }
-
+camera.updateProjectionMatrix();
 renderer.render(scene, camera)
 }
 renderer.setAnimationLoop(animate);
