@@ -65,7 +65,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 
 document.body.appendChild(renderer.domElement)
 
-const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 1, 100000);
+const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 1, 1000000);
 camera.position.set(150,150,-600);
 
 const orbit = new OrbitControls(camera, renderer.domElement);
@@ -89,7 +89,7 @@ scene.background = cubeTextureLoader.load([
 
 const textureLoader = new THREE.TextureLoader();
 let tamanho =10;
-const geometriaSol = new THREE.SphereGeometry(tamanho*109.29, 32, 32); // 109 é a proporcao mais proxima da realidade, porém foi diminuido para melhor visualizacao
+const geometriaSol = new THREE.SphereGeometry(109.29/3, 32, 32); // 109 é a proporcao mais proxima da realidade, porém foi diminuido para melhor visualizacao
 const materialSol = new THREE.MeshBasicMaterial({
     map:  textureLoader.load(solTextura),
     side: THREE.DoubleSide
@@ -128,46 +128,45 @@ function createPlanet(size, texture, position, ring) {
   return planeta;
 }
 
+/*
 
+const nuvens = createPlanet(tamanho*1.01, nuvensTextura, tamanho*23481.4);
+const mercurio = createPlanet(tamanho*0.383,mercurioTextura, tamanho*9088);
+const venus = createPlanet(tamanho*0.95, venusTextura, tamanho*16983.2);
+const terra = createPlanet(tamanho, terraTextura, tamanho*23481.4);
+const lua = createPlanet(tamanho*0.273, luaTextura, tamanho*23481.4);
+const marte = createPlanet(tamanho*0.532, marteTextura, tamanho*35771.46);
+const jupiter = createPlanet(tamanho*11.2, jupiterTextura, tamanho*122162.92);
 
-const nuvens = createPlanet(tamanho*1.01, nuvensTextura, tamanho*184.29);
-const mercurio = createPlanet(tamanho*0.383,mercurioTextura, tamanho*138.29);
-const venus = createPlanet(tamanho*0.95, venusTextura, tamanho*163.29);
-const terra = createPlanet(tamanho, terraTextura, tamanho*184.29);
-const lua = createPlanet(tamanho*0.273, luaTextura, tamanho*184.29);
-const marte = createPlanet(tamanho*0.532, marteTextura, tamanho*224.29);
-const jupiter = createPlanet(tamanho*10.97, jupiterTextura, tamanho*499.29);
-
-const saturno = createPlanet(tamanho*10, saturnoTextura, tamanho*824.29, {
+const saturno = createPlanet(tamanho*9.45, saturnoTextura, tamanho*224454.56, {
     innerRadius: tamanho*12.88,
-    outerRadius: tamanho*21.92,
+    outerRadius: tamanho*18,
     texture: anelSaturnoTextura
 });
-const uranus = createPlanet(tamanho*3.98, uranoTextura, tamanho*2509, {
+const uranus = createPlanet(tamanho*3.98, uranoTextura, tamanho*450478.731, {
   innerRadius: tamanho*5.96,
   outerRadius: tamanho*7.69,
   texture: anelUranoTextura
 });
 
 
-const netuno = createPlanet(tamanho*3.85, netunoTextura, tamanho*2359.29);
-const pluto = createPlanet(tamanho*0.19, plutoTextura, tamanho*3069.29);
+const netuno = createPlanet(tamanho*3.85, netunoTextura, tamanho*704755);
+const pluto = createPlanet(tamanho*0.19, plutoTextura, tamanho*927640.87);
 
-const europa = createPlanet(tamanho*0.245, europaTextura, tamanho*499.29);
-const calisto = createPlanet(tamanho*0.378, calistoTextura , tamanho*499.29);
-const ganymede = createPlanet(tamanho*0.413, ganymedeTextura, tamanho*499.29);
-const iO = createPlanet(tamanho*0.286, iOTextura, tamanho*499.29);
-
-
-const dione = createPlanet(tamanho*0.088, dioneTextura, tamanho*824.29);
-const japeto = createPlanet(tamanho*0.115, japetoTextura, tamanho*824.29);
-const rhea = createPlanet(tamanho*0.12, rheaTextura,tamanho*824.29);
-const tita = createPlanet(tamanho*0.406, titaTextura, tamanho*824.29);
+const europa = createPlanet(tamanho*0.245, europaTextura, tamanho*122162.92);
+const calisto = createPlanet(tamanho*0.378, calistoTextura , tamanho*122162.92);
+const ganymede = createPlanet(tamanho*0.413, ganymedeTextura, tamanho*122162.92);
+const iO = createPlanet(tamanho*0.286, iOTextura, tamanho*122162.92);
 
 
+const dione = createPlanet(tamanho*0.088, dioneTextura, tamanho*224454.56);
+const japeto = createPlanet(tamanho*0.115, japetoTextura, tamanho*224454.56);
+const rhea = createPlanet(tamanho*0.12, rheaTextura,tamanho*224454.56);
+const tita = createPlanet(tamanho*0.406, titaTextura, tamanho*224454.56);
 
 
-/*
+*/
+
 const mercurio = createPlanet(tamanho*0.383,mercurioTextura,100);
 const venus = createPlanet(tamanho*0.95, venusTextura,200);
 const terra = createPlanet(tamanho, terraTextura,300);
@@ -206,7 +205,7 @@ const tita = createPlanet(tamanho*0.406, titaTextura, 1200);
 
 
 
-*/
+
 
 
 terra.add(lua);
@@ -250,23 +249,23 @@ function animate() {
 
 
 
+/*
 
 
 
 
-
-  mercurio.position.set(Math.cos(tempo*4) * tamanho*138.29, 0, Math.sin(tempo*4) *tamanho* 138.29);
-  venus.position.set(Math.cos(tempo*1.6) * tamanho*163.29, 0, Math.sin(tempo*1.6) * tamanho*163.29);
-  terra.position.set(Math.cos(tempo) * tamanho*184.29, 0, Math.sin(tempo) *tamanho* 184.29);
-  nuvens.position.set(Math.cos(tempo) * tamanho*184.29, 0, Math.sin(tempo) * tamanho*184.29);
-  marte.position.set(Math.cos(tempo/1.87) *tamanho* 224.29, 0, Math.sin(tempo/1.87) *tamanho* 224.29);
+  mercurio.position.set(Math.cos(tempo*4) * tamanho*9088, 0, Math.sin(tempo*4) *tamanho*9088);
+  venus.position.set(Math.cos(tempo*1.6) * tamanho*16983.2, 0, Math.sin(tempo*1.6) * tamanho*16983.2);
+  terra.position.set(Math.cos(tempo) * tamanho*23481.4, 0, Math.sin(tempo) *tamanho*23481.4);
+  nuvens.position.set(Math.cos(tempo) * tamanho*23481.4, 0, Math.sin(tempo) * tamanho*23481.4);
+  marte.position.set(Math.cos(tempo/1.87) *tamanho*35771.46, 0, Math.sin(tempo/1.87) *tamanho*35771.46);
   
-   jupiter.position.set(Math.cos(tempo/11.9) * tamanho*499.29, 0, Math.sin(tempo/11.9) *tamanho* 499.29);
-  saturno.position.set(Math.cos(tempo/29.41) *tamanho* 824.29, 0, Math.sin(tempo/29.41) *tamanho* 824.29);
+   jupiter.position.set(Math.cos(tempo/11.9) * tamanho*122162.92, 0, Math.sin(tempo/11.9) *tamanho*122162.92);
+  saturno.position.set(Math.cos(tempo/29.41) *tamanho*224454.56, 0, Math.sin(tempo/29.41) *tamanho*224454.56);
 
-  uranus.position.set(Math.cos(tempo/83.3) *tamanho* 1544.29, 0, Math.sin(tempo/83.3) *tamanho*1544.29 );
-  netuno.position.set(Math.cos(tempo/166.6) *tamanho* 2359.29, 0, Math.sin(tempo/166.6) *tamanho* 2359.29 );
-  pluto.position.set(Math.cos(tempo/250) *tamanho* 3069.29, 0, Math.sin(tempo/250) *tamanho*3069.29 );
+  uranus.position.set(Math.cos(tempo/83.3) *tamanho*450478.731, 0, Math.sin(tempo/83.3) *tamanho*450478.731 );
+  netuno.position.set(Math.cos(tempo/166.6) *tamanho*704755, 0, Math.sin(tempo/166.6) *tamanho*704755 );
+  pluto.position.set(Math.cos(tempo/250) *tamanho*927640.87, 0, Math.sin(tempo/250) *tamanho*927640.87 );
 
  
 
@@ -286,14 +285,14 @@ function animate() {
   tita.position.set(Math.cos(-tempo*6.5) *tamanho* 69.4, 0, Math.sin(-tempo*6.5) *tamanho*69.4);
   rhea.position.set(Math.cos(-tempo*23) *tamanho* 30.46, 0, Math.sin(-tempo*23) *tamanho*30.46);
 
-
+ */
 
  
 
 
 
 
-/*
+
 
 
 mercurio.position.set(Math.cos(tempo*4) * 100, 0, Math.sin(tempo*4) *100);
@@ -323,7 +322,7 @@ dione.position.set(Math.cos(-tempo* 37.8)*(tamanho/5)* 25 , 0, Math.sin(-tempo* 
 japeto.position.set(Math.cos(-tempo*1.31) *(tamanho/5)* 206, 0, Math.sin(-tempo*1.31) *(tamanho/5)*206);
 tita.position.set(Math.cos(-tempo*6.5) *(tamanho/5)* 69.4, 0, Math.sin(-tempo*6.5) *(tamanho/5)*69.4);
 rhea.position.set(Math.cos(-tempo*23) *(tamanho/5)* 30.46, 0, Math.sin(-tempo*23) *(tamanho/5)*30.46);
- */
+
   switch (astro) {
     case "sol":
       if (camera.parent) {
