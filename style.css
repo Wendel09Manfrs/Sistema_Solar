@@ -9,11 +9,27 @@ body{
         z-index: 1;
         display: flex;
         flex-direction: column;
-
+    }
     .vel {
         margin-bottom: 10px; /* Espaçamento entre cada grupo de controle */
     }
 
     input[type="range"] {
         width: 100%;
+    }
+    #rastro {
+        transform: scale(1.5);
+        margin-left: 5%;
+        margin-bottom: 5%;
+    }
+    #ocultarRastro {
+        transform: scale(1.5);
+        margin-left: 5%;
+    }
+
+    #box{
+        display: flex;
+        flex-direction: column;
+        padding-right: 5%;
+        padding-top: 5%;
     }
