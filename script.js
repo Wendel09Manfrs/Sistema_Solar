@@ -1,19 +1,19 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 
-import venusTextura from './texturess/objetos/venus.jpg';
-import mercurioTextura from './texturess/objetos/mercurio.jpg';
-import netunoTextura from './texturess/objetos/netuno.jpg';
-import marteTextura from './texturess/objetos/marte.jpg';
-import saturnoTextura from './texturess/objetos/saturno.jpg';
-import jupiterTextura from './texturess/objetos/jupiter.jpg';
-import terraTextura from './texturess/objetos/terra.jpg';
-import plutoTextura from './texturess/objetos/pluto.jpg';
 import solTextura from './texturess/objetos/sol.jpg';
-import nuvensTextura from './texturess/objetos/nuvens.jpg';
-import uranoTextura from './texturess/objetos/urano.jpg';
+import mercurioTextura from './texturess/objetos/mercurioReal.jpg';
+import venusTextura from './texturess/objetos/venusReal.jpg';
+import terraTextura from './texturess/objetos/terraReal.jpg';
+import nuvensTextura from './texturess/objetos/nuvens.png';
+import marteTextura from './texturess/objetos/marteReal.jpg';
+import saturnoTextura from './texturess/objetos/saturnoReal.jpg';
+import jupiterTextura from './texturess/objetos/jupiterReal.jpg';
+import uranoTextura from './texturess/objetos/uranoReal.jpg';
 import anelSaturnoTextura from './texturess/objetos/anelSaturno.jpg';
 import anelUranoTextura from './texturess/objetos/anelUrano.png';
+import netunoTextura from './texturess/objetos/netunoReal.jpg';
+import plutoTextura from './texturess/objetos/pluto.jpg';
 
 import luaTextura from './texturess/objetos/lua.jpg';
 
@@ -186,7 +186,7 @@ function createLinha() {
   let linhaGeo = new THREE.BufferGeometry().setFromPoints(traco);
   let linhaMat = new THREE.PointsMaterial({
     color: corAleatoria(),
-    size: 2, 
+    size: 1, 
   });
   let linha = new THREE.Points(linhaGeo, linhaMat);
   scene.add(linha);
