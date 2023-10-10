@@ -70,21 +70,16 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 
 document.body.appendChild(renderer.domElement)
 
-const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 1, 1000000);
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000000);
 camera.position.set(150,150,-600);
 
 const orbit = new OrbitControls(camera, renderer.domElement);
 orbit.enablePan = true;  
 orbit.enableRotate = true;
+orbit.enableZoom = true; 
 orbit.maxZoom = 1000;
+renderer.shadowMap.enabled = true;
 
-
-const ambientLight = new THREE.AmbientLight(0x333333);
-scene.add(ambientLight);
-
-const pointLight = new THREE.PointLight(0xFFFFFF, 5, 2500, 0.2);
-pointLight.position.set(0,0,0);
-scene.add(pointLight);
 
 
 
@@ -110,6 +105,8 @@ function createPlanetLua(size, texture, position, ring) {
     transparent: true,
     side: THREE.DoubleSide,
   });
+  mat.shadowMapEnabled = true;
+  mat.shadowMapType = THREE.PCFSoftShadowMap;
   const planeta = new THREE.Mesh(geo, mat);
   if (ring) {
     const ringGeo = new THREE.RingGeometry(
@@ -133,7 +130,7 @@ function createPlanetLua(size, texture, position, ring) {
 const mercurio = createPlanetLua(tamanho*0.383,mercurioTextura,100);
 const venus = createPlanetLua(tamanho*0.95, venusTextura,200);
 const terra = createPlanetLua(tamanho, terraTextura,300);
-const nuvens = createPlanetLua(tamanho*1.01, nuvensTextura,300);
+const nuvens = createPlanetLua(tamanho*1.005, nuvensTextura,300);
 const marte = createPlanetLua(tamanho*0.532, marteTextura,450);
 const jupiter = createPlanetLua((tamanho/5)*10.97, jupiterTextura, 700);
 const saturno = createPlanetLua((tamanho/5)*10, saturnoTextura, 1200, {
@@ -162,6 +159,14 @@ const dione = createPlanetLua(tamanho*0.088, dioneTextura, 1200);
 const japeto = createPlanetLua(tamanho*0.115, japetoTextura, 1200);
 const rhea = createPlanetLua(tamanho*0.12, rheaTextura,1200);
 const tita = createPlanetLua(tamanho*0.406, titaTextura, 1200);
+
+const ambientLight = new THREE.AmbientLight(0x333333);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0xFFFFFF, 3, 3000, 0.01);
+
+pointLight.position.set(0,0,0);
+scene.add(pointLight);
 
 terra.add(luaT);
 jupiter.add(europa);
@@ -208,7 +213,10 @@ const linhaEuropa = createLinha();
 
 const linhasW = [linhaMer, linhaVen, linhaTer, linhaMar, linhaJup, linhaSat, linhaUr, linhaNet, linhaPlu];
 const planetasW = [mercurio, venus, terra, marte, jupiter, saturno, uranus, netuno, pluto];
-const luasW = [luaT, europa, calisto, ganymede, iO, dione, japeto, tita, rhea];
+const luasJupiter = [europa, calisto, ganymede, iO];
+const luasSaturno = [dione, japeto, tita, rhea];
+
+
 
 function atualizarRastro(linha, object) {
   linha.traco.push(object.position.clone());
@@ -236,11 +244,11 @@ const astros = {
   nuvens:{ objeto: nuvens, velTrans: 1, velRot: 1,raioOrbita: 300, excentricidade: 0.017 },
   marte:{ objeto: marte, velTrans: 1 / 1.87, velRot: 1.03, raioOrbita: 450, excentricidade: 0.0934 },
   jupiter: { objeto: jupiter, velTrans: 1 / 11.9, velRot: 2.4,raioOrbita: 700, excentricidade: 0.049 },
-  saturno:{ objeto: saturno, velTrans: 1 / 29.41, velRot: 2.2,raioOrbita: 1200, excentricidade: 0.0565 },
+  saturno:{ objeto: saturno, velTrans: 1 / 29.41, velRot: 2.2,raioOrbita: 3000, excentricidade: 0.0565 },
   uranus:{ objeto: uranus, velTrans: 1 / 83.3,velRot: 1.38, raioOrbita: 1500, excentricidade: 0.046 },
   netuno:{ objeto: netuno, velTrans: 1 / 166.6, velRot: 1.49, raioOrbita: 1800, excentricidade: 0.0934 },
   pluto:{ objeto: pluto, velTrans: 1 / 250, velRot: 0.156, raioOrbita: 2100, excentricidade: 0.01 },
-  luaT:{ objeto: luaT, velTrans: 13, velRot: 4,raioOrbita: 30 , excentricidade: 0.0549,raioCamera:35, objetoPai:terra},
+  luaT:{ objeto: luaT, velTrans: 13, velRot: 4,raioOrbita: 50 , excentricidade: 0.0549,raioCamera:35, objetoPai:terra},
   europa: { objeto: europa, velTrans: 1.76, velRot: 4, raioOrbita: 35.94 , excentricidade: 0.0094, raioCamera:39, objetoPai: jupiter},
   calisto:{ objeto: calisto, velTrans: 1/4.7, velRot: 4, raioOrbita: 81 ,  excentricidade: 0,raioCamera:87, objetoPai: jupiter},
   ganymede: { objeto: ganymede, velTrans: 1/2, velRot: 4, raioOrbita: 50.8 , excentricidade: 0.0013,raioCamera:56, objetoPai: jupiter},
@@ -261,11 +269,14 @@ function atualizarCameraParaAstro(astro) {
   camera.lookAt(objeto.position);
   objeto.add(camera);
 
+
   } else  if (raioCamera !== undefined) {
     camera.lookAt(objetoPai.position);
     objetoPai.add(camera);
-    const x = Math.cos(-tempo * velTrans) * raioCamera * tamanho * 0.2;
-    const z = Math.sin(-tempo * velTrans) * raioCamera * tamanho * 0.2;
+    const x = Math.cos(-tempo * velTrans) * raioOrbita*1.1 * tamanho * 0.2;
+    const z = Math.sin(-tempo * velTrans) * raioOrbita*1.1 * tamanho * 0.2;
+
+
     camera.position.set(x, 0, z);
     }
 }
