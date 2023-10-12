@@ -97,7 +97,7 @@ const sol = new THREE.Mesh(geometriaSol, materialSol);
 sol.position.set(0, 0, 0);
 scene.add(sol);
 
-function createPlanetLua(size, texture, position, ring) {
+function createPlanetLua(size, texture, position,inclinacao, ring) {
   const textureLoader = new THREE.TextureLoader();
   const geo = new THREE.SphereGeometry(size, 30, 30);
   const mat = new THREE.MeshStandardMaterial({
@@ -123,46 +123,50 @@ function createPlanetLua(size, texture, position, ring) {
   }
   scene.add(planeta);
   planeta.position.x = position;
+ 
+const inclinaRad = (inclinacao * Math.PI) / 180.0;
+
+planeta.rotation.x = inclinaRad;
   return planeta;
 }
 
 
 
-
-
 //const nuvens = createPlanetLua(tamanho*1.001, nuvensTextura, tamanho*46921);
-const mercurio = createPlanetLua(tamanho*0.383,mercurioTextura, tamanho* 18226);
-const venus = createPlanetLua(tamanho*0.95, venusTextura, tamanho*33945);
-const terra = createPlanetLua(tamanho, terraTextura, tamanho*46921);
-const luaT = createPlanetLua(tamanho*0.273, luaTextura, tamanho*46921);
-const marte = createPlanetLua(tamanho*0.532, marteTextura, tamanho*71455);
-const jupiter = createPlanetLua(tamanho*11.2, jupiterTextura, tamanho*244235 );
+const mercurio = createPlanetLua(tamanho*0.383,mercurioTextura, tamanho* 18226,0.034);
+const venus = createPlanetLua(tamanho*0.95, venusTextura, tamanho*33945,177.4);
 
-const saturno = createPlanetLua(tamanho*9.45, saturnoTextura, tamanho*445398, {
+const terra = createPlanetLua(tamanho, terraTextura, tamanho*46921,23.44);
+const luaT = createPlanetLua(tamanho*0.273, luaTextura, tamanho*46921,6.68);
+
+const marte = createPlanetLua(tamanho*0.532, marteTextura, tamanho*71455,25.19);
+const jupiter = createPlanetLua(tamanho*11.2, jupiterTextura, tamanho*244235,3.12 );
+
+const saturno = createPlanetLua(tamanho*9.45, saturnoTextura, tamanho*445398,26.73, {
     innerRadius: tamanho*12.88,
     outerRadius: tamanho*21,
     texture: anelSaturnoTextura
 });
-const uranus = createPlanetLua(tamanho*3.98, uranoTextura, tamanho*899097, {
+const uranus = createPlanetLua(tamanho*3.98, uranoTextura, tamanho*899097,97.77, {
   innerRadius: tamanho*5.96,
   outerRadius: tamanho*7.29,
   texture: anelUranoTextura
 });
 
 
-const netuno = createPlanetLua(tamanho*3.85, netunoTextura, tamanho*1412490 );
-const pluto = createPlanetLua(tamanho*0.19, plutoTextura, tamanho*1848981);
+const netuno = createPlanetLua(tamanho*3.85, netunoTextura, tamanho*1412490,28.32 );
+const pluto = createPlanetLua(tamanho*0.19, plutoTextura, tamanho*1848981,119.61);
 
-const europa = createPlanetLua(tamanho*0.245, europaTextura, tamanho*244235 );
-const calisto = createPlanetLua(tamanho*0.378, calistoTextura , tamanho*244235 );
-const ganymede = createPlanetLua(tamanho*0.413, ganymedeTextura, tamanho*244235 );
-const iO = createPlanetLua(tamanho*0.286, iOTextura, tamanho*244235 );
+const europa = createPlanetLua(tamanho*0.245, europaTextura, tamanho*244235,0.1 );
+const calisto = createPlanetLua(tamanho*0.378, calistoTextura , tamanho*244235,0.192 );
+const ganymede = createPlanetLua(tamanho*0.413, ganymedeTextura, tamanho*244235, 0.195 );
+const iO = createPlanetLua(tamanho*0.286, iOTextura, tamanho*244235, 0.04 );
 
 
-const dione = createPlanetLua(tamanho*0.088, dioneTextura, tamanho*445398);
-const japeto = createPlanetLua(tamanho*0.115, japetoTextura, tamanho*445398);
-const rhea = createPlanetLua(tamanho*0.12, rheaTextura,tamanho*445398);
-const tita = createPlanetLua(tamanho*0.406, titaTextura, tamanho*445398);
+const dione = createPlanetLua(tamanho*0.088, dioneTextura, tamanho*445398, 0.028);
+const japeto = createPlanetLua(tamanho*0.115, japetoTextura, tamanho*445398,0.2);
+const rhea = createPlanetLua(tamanho*0.12, rheaTextura,tamanho*445398,0.345);
+const tita = createPlanetLua(tamanho*0.406, titaTextura, tamanho*445398,0.3);
 
 const ambientLight = new THREE.AmbientLight(0x333333);
 scene.add(ambientLight);
@@ -182,6 +186,8 @@ saturno.add(dione);
 saturno.add(japeto);
 saturno.add(rhea);
 saturno.add(tita);
+
+
 
 function corAleatoria() {
   const r = Math.random();
@@ -264,18 +270,18 @@ function ocultarRastro(linha, object,  checked) {
 let tempo=0;
 
 const astros = {
-  sol: { objeto: sol, velTrans: 0, velRot: 0.03, raioOrbita: 0, excentricidade: 0, inclinacao:80},
-  mercurio: { objeto: mercurio, velTrans: 4, velRot: 0.017, raioOrbita:  18226, excentricidade: 0.2, inclinacao:20 },
-  venus:{ objeto: venus, velTrans: 1.6, velRot: 0.004, raioOrbita: 33945, excentricidade: 0.007, inclinacao:40 },
-  terra:{ objeto: terra, velTrans: 1,velRot: 9.9, raioOrbita: 46921, excentricidade: 0.017, inclinacao:80 },
+  sol: { objeto: sol, velTrans: 0, velRot: 0.03, raioOrbita: 0, excentricidade: 0},
+  mercurio: { objeto: mercurio, velTrans: 4, velRot: 0.017, raioOrbita:  18226, excentricidade: 0.2  },
+  venus:{ objeto: venus, velTrans: 1.6, velRot: 4, raioOrbita: 33945, excentricidade: 0.007  },
+  terra:{ objeto: terra, velTrans: 1,velRot: 9.9, raioOrbita: 46921, excentricidade: 0.017  },
   //nuvens:{ objeto: nuvens, velTrans: 1, velRot: 9.9,raioOrbita: 46921, excentricidade: 0.017 },
-  marte:{ objeto: marte, velTrans: 1 / 1.87, velRot: 1.03, raioOrbita: 71455, excentricidade: 0.0934, inclinacao:60 },
-  jupiter: { objeto: jupiter, velTrans: 1 / 11.9, velRot: 2.4,raioOrbita: 244235, excentricidade: 0.049, inclinacao:10 },
-  saturno:{ objeto: saturno, velTrans: 1 / 29.41, velRot: 2.2,raioOrbita: 445398, excentricidade: 0.0565, inclinacao:25 },
-  uranus:{ objeto: uranus, velTrans: 1 / 83.3,velRot: 1.38, raioOrbita: 899097, excentricidade: 0.046, inclinacao:35 },
-  netuno:{ objeto: netuno, velTrans: 1 / 166.6, velRot: 1.49, raioOrbita: 1412490, excentricidade: 0.0934, inclinacao:45 },
-  pluto:{ objeto: pluto, velTrans: 1 / 250, velRot: 0.156, raioOrbita: 1848981, excentricidade: 0.01, inclinacao:70 },
-  luaT:{ objeto: luaT, velTrans: 13, velRot: 4,raioOrbita: 61.335 , excentricidade: 0.0549,raioCamera:62, objetoPai:terra},
+  marte:{ objeto: marte, velTrans: 1 / 1.87, velRot: 1.03, raioOrbita: 71455, excentricidade: 0.0934  },
+  jupiter: { objeto: jupiter, velTrans: 1 / 11.9, velRot: 2.4,raioOrbita: 244235, excentricidade: 0.049  },
+  saturno:{ objeto: saturno, velTrans: 1 / 29.41, velRot: 2.2,raioOrbita: 445398, excentricidade: 0.0565  },
+  uranus:{ objeto: uranus, velTrans: 1 / 83.3,velRot: 1.38, raioOrbita: 899097, excentricidade: 0.046  },
+  netuno:{ objeto: netuno, velTrans: 1 / 166.6, velRot: 1.49, raioOrbita: 1412490, excentricidade: 0.0934 },
+  pluto:{ objeto: pluto, velTrans: 1 / 250, velRot: 0.156, raioOrbita: 1848981, excentricidade: 0.01  },
+  luaT:{ objeto: luaT, velTrans: 13, velRot: 4,raioOrbita: 60.335 , excentricidade: 0.0549,raioCamera:61, objetoPai:terra},
   europa: { objeto: europa, velTrans: 1.76, velRot: 4, raioOrbita:  105.4 , excentricidade: 0.0094, raioCamera:106, objetoPai: jupiter},
   calisto:{ objeto: calisto, velTrans: 1/4.7, velRot: 4, raioOrbita: 295.95 ,  excentricidade: 0,raioCamera:297, objetoPai: jupiter},
   ganymede: { objeto: ganymede, velTrans: 1/2, velRot: 4, raioOrbita: 168.48 , excentricidade: 0.0013,raioCamera:169.5, objetoPai: jupiter},
@@ -318,15 +324,9 @@ function animate() {
       const { objeto, velTrans, velRot, raioOrbita, excentricidade,raioCamera, objetoPai, inclinacao} = astros[astro];
       
       if (raioCamera === undefined) {
-       
-
-
         const x = Math.cos(tempo * velTrans) * raioOrbita*tamanho;
         const z = Math.sin(tempo * velTrans) * raioOrbita * Math.sqrt(1 - Math.pow(excentricidade, 2))*tamanho;
         objeto.position.set(x, 0, z);
-
-        const inclinacaoRadianos = (inclinacao * Math.PI) / 180.0;
-        objeto.rotation.x = inclinacaoRadianos;
        
       }
       else if (raioCamera !== undefined) {
@@ -339,6 +339,7 @@ function animate() {
       atualizarCameraParaAstro(objeto);
   
       objeto.rotateY(velocidadeRo * velRot);
+
 
 
     }
