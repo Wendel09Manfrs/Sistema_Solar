@@ -27,12 +27,12 @@ import japetoTextura from './texturess/objetos/japetoSaturno.jpg';
 import rheaTextura from './texturess/objetos/rheaSaturno.jpg';
 import titaTextura from './texturess/objetos/titaSaturno.jpg';
 
-import nx from './texturess/nx.png';
-import ny from './texturess/ny.png';
-import nz from './texturess/nz.png';
-import px from './texturess/px.png';
-import py from './texturess/py.png';
-import pz from './texturess/pz.png';
+import nx from './texturess/cenario/nx.png';
+import ny from './texturess/cenario/ny.png';
+import nz from './texturess/cenario/nz.png';
+import px from './texturess/cenario/px.png';
+import py from './texturess/cenario/py.png';
+import pz from './texturess/cenario/pz.png';
 
 
 let velocidadeTr = 0.001;
@@ -77,7 +77,6 @@ const orbit = new OrbitControls(camera, renderer.domElement);
 orbit.enablePan = true;  
 orbit.enableRotate = true;
 orbit.enableZoom = true; 
-orbit.maxZoom = 1000;
 renderer.shadowMap.enabled = true;
 
 
@@ -85,6 +84,9 @@ renderer.shadowMap.enabled = true;
 
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 scene.background = cubeTextureLoader.load([px,nx,py,ny,pz,nz]);
+
+const backgroundMaterial = new THREE.MeshBasicMaterial({ map: cubeTextureLoader });
+backgroundMaterial.reflectivity = 0.1;
 
 const textureLoader = new THREE.TextureLoader();
 let tamanho =1;
@@ -171,6 +173,8 @@ const tita = createPlanetLua(tamanho*0.406, titaTextura, tamanho*445398,0.3);
 const ambientLight = new THREE.AmbientLight(0x333333);
 scene.add(ambientLight);
 
+
+
 const pointLight = new THREE.PointLight(0xFFFFFF, 3, 2500000, 0.0000001);
 
 pointLight.position.set(0,0,0);
@@ -201,7 +205,8 @@ function createLinha() {
   let linhaGeo = new THREE.BufferGeometry().setFromPoints(traco);
   let linhaMat = new THREE.PointsMaterial({
     color: corAleatoria(),
-    size: 1, 
+    size: 1 , 
+  
   });
   let linha = new THREE.Points(linhaGeo, linhaMat);
   scene.add(linha);
