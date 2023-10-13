@@ -10,7 +10,7 @@
     <div id="controles">
 
       <div class="vel">
-      <input type="range" id="barraTranslacao" min="0" max="0.01" step="0.0001" value="0.001">
+      <input type="range" id="barraTranslacao" min="0" max="1" step="0.000001" value="0.001">
       <p style="color: rgb(255, 255, 255); font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Velocidade(Translação)
     </div>
     
@@ -20,21 +20,48 @@
     </div>
 
 
-    <label for="astros" style="color: rgb(255, 255, 255); font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Selecione um astro:</label>
+    <label for="astros" style="color: rgb(255, 255, 255); font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Selecione um astro para visualizar:</label>
     <select id="astros" style="height: 20px;">
       <option value="sol">Sol</option>
-        <option value="mercurio">Mercurio</option>
-        <option value="venus">Venus</option>
+      <optgroup label="Planetas">
+        <option value="mercurio">Mercúrio</option>
+        <option value="venus">Vênus</option>
         <option value="terra">Terra</option>
         <option value="marte">Marte</option>
-        <option value="jupiter">Jupiter</option>
+        <option value="jupiter">Júpiter</option>
         <option value="saturno">Saturno</option>
         <option value="uranus">Urano</option>
         <option value="netuno">Netuno</option>
-        <option value="pluto">Pluto</option>
+        <option value="pluto">Plutão</option>
+      </optgroup>
+      <optgroup label="Lua da Terra">
+        <option value="luaT">Lua</option>
+      </optgroup>
+      <optgroup label="Luas de Jupiter">
+        <option value="europa">Europa</option>
+        <option value="calisto">Calisto</option>
+        <option value="ganymede">Ganímedes</option>
+        <option value="iO">iO</option>
+      </optgroup>
+      <optgroup label="Luas de Saturno">
+        <option value="dione">Dione</option>
+        <option value="japeto">Japeto</option>
+        <option value="tita">Titã</option>
+        <option value="rhea">Rhea</option>
+      </optgroup>
     </select>
 
+    <div id="box">
+    <div>
+    <label for="rastro" style="color: rgb(255, 255, 255); font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Marcar trajetória:</label>
+      <input type="checkbox" id="rastro">
+    </div>
 
+    <div>
+    <label for="ocultarRastro" style="color: rgb(255, 255, 255); font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Ocultar trajetória:  </label>
+      <input type="checkbox" id="ocultarRastro">
+    </div>
+    </div>
 
 
   
