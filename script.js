@@ -89,7 +89,6 @@ const backgroundMaterial = new THREE.MeshBasicMaterial({ map: cubeTextureLoader 
 backgroundMaterial.reflectivity = 0.1;
 
 const textureLoader = new THREE.TextureLoader();
-let tamanho =1;
 const geometriaSol = new THREE.SphereGeometry(109.29, 32, 32); // 109 é a proporcao mais proxima da realidade, porém foi diminuido para melhor visualizacao
 const materialSol = new THREE.MeshBasicMaterial({
     map:  textureLoader.load(solTextura),
@@ -134,41 +133,41 @@ planeta.rotation.x = inclinaRad;
 
 
 
-//const nuvens = createPlanetLua(tamanho*1.001, nuvensTextura, tamanho*46921);
-const mercurio = createPlanetLua(tamanho*0.383,mercurioTextura, tamanho* 18226,0.034);
-const venus = createPlanetLua(tamanho*0.95, venusTextura, tamanho*33945,177.4);
+//const nuvens = createPlanetLua(1.001, nuvensTextura, 46921);
+const mercurio = createPlanetLua(0.383,mercurioTextura,  18226,0.034);
+const venus = createPlanetLua(0.95, venusTextura, 33945,177.4);
 
-const terra = createPlanetLua(tamanho, terraTextura, tamanho*46921,23.44);
-const luaT = createPlanetLua(tamanho*0.273, luaTextura, tamanho*46921,6.68);
+const terra = createPlanetLua(1, terraTextura, 46921,23.44);
+const luaT = createPlanetLua(0.273, luaTextura, 46921,6.68);
 
-const marte = createPlanetLua(tamanho*0.532, marteTextura, tamanho*71455,25.19);
-const jupiter = createPlanetLua(tamanho*11.2, jupiterTextura, tamanho*244235,3.12 );
+const marte = createPlanetLua(0.532, marteTextura, 71455,25.19);
+const jupiter = createPlanetLua(11.2, jupiterTextura, 244235,3.12 );
 
-const saturno = createPlanetLua(tamanho*9.45, saturnoTextura, tamanho*445398,26.73, {
-    innerRadius: tamanho*12.88,
-    outerRadius: tamanho*21,
+const saturno = createPlanetLua(9.45, saturnoTextura, 445398,26.73, {
+    innerRadius: 12.88,
+    outerRadius: 21,
     texture: anelSaturnoTextura
 });
-const uranus = createPlanetLua(tamanho*3.98, uranoTextura, tamanho*899097,97.77, {
-  innerRadius: tamanho*5.96,
-  outerRadius: tamanho*7.29,
+const uranus = createPlanetLua(3.98, uranoTextura, 899097,97.77, {
+  innerRadius: 5.96,
+  outerRadius: 7.29,
   texture: anelUranoTextura
 });
 
 
-const netuno = createPlanetLua(tamanho*3.85, netunoTextura, tamanho*1412490,28.32 );
-const pluto = createPlanetLua(tamanho*0.19, plutoTextura, tamanho*1848981,119.61);
+const netuno = createPlanetLua(3.85, netunoTextura, 1412490,28.32 );
+const pluto = createPlanetLua(0.19, plutoTextura, 1848981,119.61);
 
-const europa = createPlanetLua(tamanho*0.245, europaTextura, tamanho*244235,0.1 );
-const calisto = createPlanetLua(tamanho*0.378, calistoTextura , tamanho*244235,0.192 );
-const ganymede = createPlanetLua(tamanho*0.413, ganymedeTextura, tamanho*244235, 0.195 );
-const iO = createPlanetLua(tamanho*0.286, iOTextura, tamanho*244235, 0.04 );
+const europa = createPlanetLua(0.245, europaTextura, 244235,0.1 );
+const calisto = createPlanetLua(0.378, calistoTextura , 244235,0.192 );
+const ganymede = createPlanetLua(0.413, ganymedeTextura, 244235, 0.195 );
+const iO = createPlanetLua(0.286, iOTextura, 244235, 0.04 );
 
 
-const dione = createPlanetLua(tamanho*0.088, dioneTextura, tamanho*445398, 0.028);
-const japeto = createPlanetLua(tamanho*0.115, japetoTextura, tamanho*445398,0.2);
-const rhea = createPlanetLua(tamanho*0.12, rheaTextura,tamanho*445398,0.345);
-const tita = createPlanetLua(tamanho*0.406, titaTextura, tamanho*445398,0.3);
+const dione = createPlanetLua(0.088, dioneTextura, 445398, 0.028);
+const japeto = createPlanetLua(0.115, japetoTextura, 445398,0.2);
+const rhea = createPlanetLua(0.12, rheaTextura,445398,0.345);
+const tita = createPlanetLua(0.406, titaTextura, 445398,0.3);
 
 const ambientLight = new THREE.AmbientLight(0x333333);
 scene.add(ambientLight);
@@ -286,15 +285,15 @@ const astros = {
   uranus:{ objeto: uranus, velTrans: 1 / 83.3,velRot: 1.38, raioOrbita: 899097, excentricidade: 0.046  },
   netuno:{ objeto: netuno, velTrans: 1 / 166.6, velRot: 1.49, raioOrbita: 1412490, excentricidade: 0.0934 },
   pluto:{ objeto: pluto, velTrans: 1 / 250, velRot: 0.156, raioOrbita: 1848981, excentricidade: 0.01  },
-  luaT:{ objeto: luaT, velTrans: 13, velRot: 4,raioOrbita: 60.335 , excentricidade: 0.0549,raioCamera:61, objetoPai:terra},
-  europa: { objeto: europa, velTrans: 1.76, velRot: 4, raioOrbita:  105.4 , excentricidade: 0.0094, raioCamera:106, objetoPai: jupiter},
-  calisto:{ objeto: calisto, velTrans: 1/4.7, velRot: 4, raioOrbita: 295.95 ,  excentricidade: 0,raioCamera:297, objetoPai: jupiter},
-  ganymede: { objeto: ganymede, velTrans: 1/2, velRot: 4, raioOrbita: 168.48 , excentricidade: 0.0013,raioCamera:169.5, objetoPai: jupiter},
-  iO:{ objeto: iO, velTrans: 1, velRot: 4, raioOrbita: 66.23  , excentricidade: 0,raioCamera:67, objetoPai: jupiter},
-  dione: { objeto: dione, velTrans: 0.31, velRot: 4, raioOrbita: 59.31 , excentricidade: 0.022,raioCamera:59.6, objetoPai: saturno},
-  japeto: { objeto: japeto, velTrans: 11.39, velRot: 4, raioOrbita: 559.43 , excentricidade: 0.0281,raioCamera:559.7, objetoPai: saturno},
-  tita:{ objeto: tita, velTrans: 0.05, velRot: 4, raioOrbita: 192.05 , excentricidade: 0,raioCamera:192.8, objetoPai: saturno},
-  rhea:{ objeto: rhea, velTrans: 0.85, velRot: 4, raioOrbita: 82.86 ,  excentricidade: 0.0013, raioCamera:83.2, objetoPai: saturno},
+  luaT:{ objeto: luaT, velTrans: 13, velRot: 4,raioOrbita: 60.335 , excentricidade: 0.0549,raioCamera:61.2, objetoPai:terra},
+  europa: { objeto: europa, velTrans: 1.76, velRot: 4, raioOrbita:  105.4 , excentricidade: 0.0094, raioCamera:106.2, objetoPai: jupiter},
+  calisto:{ objeto: calisto, velTrans: 1/4.7, velRot: 4, raioOrbita: 295.95 ,  excentricidade: 0,raioCamera:297.2, objetoPai: jupiter},
+  ganymede: { objeto: ganymede, velTrans: 1/2, velRot: 4, raioOrbita: 168.48 , excentricidade: 0.0013,raioCamera:169.7, objetoPai: jupiter},
+  iO:{ objeto: iO, velTrans: 1, velRot: 4, raioOrbita: 66.23  , excentricidade: 0,raioCamera:67.2, objetoPai: jupiter},
+  dione: { objeto: dione, velTrans: 0.31, velRot: 4, raioOrbita: 59.31 , excentricidade: 0.022,raioCamera:59.8, objetoPai: saturno},
+  japeto: { objeto: japeto, velTrans: 11.39, velRot: 4, raioOrbita: 559.43 , excentricidade: 0.0281,raioCamera:559.9, objetoPai: saturno},
+  tita:{ objeto: tita, velTrans: 0.05, velRot: 4, raioOrbita: 192.05 , excentricidade: 0,raioCamera:193, objetoPai: saturno},
+  rhea:{ objeto: rhea, velTrans: 0.85, velRot: 4, raioOrbita: 82.86 ,  excentricidade: 0.0013, raioCamera:83.4, objetoPai: saturno},
 };
 
 function atualizarCameraParaAstro(astro) {
@@ -311,8 +310,8 @@ function atualizarCameraParaAstro(astro) {
   } else  if (raioCamera !== undefined) {
     camera.lookAt(objetoPai.position);
     objetoPai.add(camera);
-    const x = Math.cos(-tempo * velTrans) * (raioCamera) * tamanho ;
-    const z = Math.sin(-tempo * velTrans) * (raioCamera) * tamanho *Math.sqrt(1 - Math.pow(excentricidade, 2));
+    const x = Math.cos(-tempo * velTrans) * (raioCamera)  ;
+    const z = Math.sin(-tempo * velTrans) * (raioCamera) *Math.sqrt(1 - Math.pow(excentricidade, 2));
 
 
     camera.position.set(x, 0, z);
@@ -329,14 +328,14 @@ function animate() {
       const { objeto, velTrans, velRot, raioOrbita, excentricidade,raioCamera, objetoPai, inclinacao} = astros[astro];
       
       if (raioCamera === undefined) {
-        const x = Math.cos(tempo * velTrans) * raioOrbita*tamanho;
-        const z = Math.sin(tempo * velTrans) * raioOrbita * Math.sqrt(1 - Math.pow(excentricidade, 2))*tamanho;
+        const x = Math.cos(tempo * velTrans) * raioOrbita;
+        const z = Math.sin(tempo * velTrans) * raioOrbita * Math.sqrt(1 - Math.pow(excentricidade, 2));
         objeto.position.set(x, 0, z);
        
       }
       else if (raioCamera !== undefined) {
-        const x = Math.cos(-tempo * velTrans) * raioOrbita*tamanho;
-        const z = Math.sin(-tempo * velTrans) * raioOrbita * tamanho*Math.sqrt(1 - Math.pow(excentricidade, 2));
+        const x = Math.cos(-tempo * velTrans) * raioOrbita;
+        const z = Math.sin(-tempo * velTrans) * raioOrbita*Math.sqrt(1 - Math.pow(excentricidade, 2));
         objeto.position.set(x, 0, z);
         
         
