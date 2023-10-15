@@ -5,7 +5,6 @@ import solTextura from './texturess/objetos/sol.jpg';
 import mercurioTextura from './texturess/objetos/mercurioReal.jpg';
 import venusTextura from './texturess/objetos/venusReal.jpg';
 import terraTextura from './texturess/objetos/terraReal.jpg';
-import nuvensTextura from './texturess/objetos/nuvens.png';
 import marteTextura from './texturess/objetos/marteReal.jpg';
 import saturnoTextura from './texturess/objetos/saturnoReal.jpg';
 import jupiterTextura from './texturess/objetos/jupiterReal.jpg';
@@ -131,7 +130,6 @@ planeta.rotation.x = inclinaRad;
 const mercurio = createPlanetLua(4,mercurioTextura,100,0.034);
 const venus = createPlanetLua(9.5, venusTextura,200,177.4);
 const terra = createPlanetLua(10, terraTextura,300,23.44);
-//const nuvens = createPlanetLua(tamanho*1.01, nuvensTextura,300);
 const marte = createPlanetLua(5.5, marteTextura,450,25.19);
 const jupiter = createPlanetLua(20, jupiterTextura, 700,3.12);
 const saturno = createPlanetLua(19, saturnoTextura, 1200,26.73, {
@@ -271,7 +269,6 @@ const astros = {
   mercurio: { objeto: mercurio, velTrans: 4, velRot: 0.017, raioOrbita: 100, excentricidade: 0.2 },
   venus:{ objeto: venus, velTrans: 1.6, velRot: 0.004, raioOrbita: 200, excentricidade: 0.007 },
   terra:{ objeto: terra, velTrans: 1,velRot: 9.9, raioOrbita: 300, excentricidade: 0.017 },
- // nuvens:{ objeto: nuvens, velTrans: 1, velRot: 9.9,raioOrbita: 300, excentricidade: 0.017 },
   marte:{ objeto: marte, velTrans: 1 / 1.87, velRot: 1.03, raioOrbita: 450, excentricidade: 0.0934 },
   jupiter: { objeto: jupiter, velTrans: 1 / 11.9, velRot: 2.4,raioOrbita: 700, excentricidade: 0.049 },
   saturno:{ objeto: saturno, velTrans: 1 / 29.41, velRot: 2.2,raioOrbita: 1200, excentricidade: 0.0565 },
