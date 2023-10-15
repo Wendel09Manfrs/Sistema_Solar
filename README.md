@@ -2,6 +2,16 @@
 
 Sistema Solar feito em JavaScript, HTML e CSS da disciplina de Computação Gráfica.
 
+ **Integrantes**
+
+- Wendel Manfrini de Andrade Mendes - 494899
+- José Alan Torres Pires - 494439
+- Clezio Brigido de Oliveira - 427778
+- Vitor Hugo Muniz de Sousa Santos - 475767
+- Marco Aurélio Gonçalves Ximenes - 508947
+- Joaquim Walisson Portela de Sousa - 472152
+
+
 Siga os passos abaixo para configurar e executar o projeto em sua máquina local:
 
 1. **Instale o Node.js**
