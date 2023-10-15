@@ -40,5 +40,5 @@ Siga os passos abaixo para configurar e executar o projeto em sua máquina local
 
    Para visualizar a cena gerada, basta acessar em seu navegador o link: [http://localhost:1234](http://localhost:1234).
 
-6. **Link do vídeo de demonstração da Aplicação Web do Sistema Solar:** [https://youtu.be/hifdMXL9ajY](https://youtu.be/hifdMXL9ajY)
+6. **Link do vídeo de demonstração da Aplicação Web do Sistema Solar:** [https://youtu.be/RGM7-pt1v3k](https://youtu.be/RGM7-pt1v3k)
 
